@@ -11,23 +11,21 @@ import com.microservices.entity.User;
 import com.microservices.repository.UserRepository;
 
 import javassist.NotFoundException;
-
 import java.util.List;
-
 import javax.servlet.UnavailableException;
 
 @Service
 public class UserService {
 
-	@Autowired
+    @Autowired
     private UserRepository userRepository;
-	private final RabbitTemplate rabbitTemplate;
-	private final Exchange exchange;
+    private final RabbitTemplate rabbitTemplate;
+    private final Exchange exchange;
 	
-	public UserService(RabbitTemplate rabbitTemplate, Exchange exchange) {
-		this.rabbitTemplate = rabbitTemplate;
-		this.exchange = exchange;
-	}
+    public UserService(RabbitTemplate rabbitTemplate, Exchange exchange) {
+	this.rabbitTemplate = rabbitTemplate;
+	this.exchange = exchange;
+    }
     
     
     public List<User> findAll() {
@@ -67,9 +65,9 @@ public class UserService {
     }
 
     @Transactional
-	public void deleteByEmail(String email) {
-		userRepository.deleteByEmail(email);
-	}
+    public void deleteByEmail(String email) {
+	userRepository.deleteByEmail(email);
+    }
     
     public void healthCheck() throws UnavailableException {
     	if (userRepository == null)
