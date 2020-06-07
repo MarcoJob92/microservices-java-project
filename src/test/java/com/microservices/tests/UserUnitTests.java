@@ -1,9 +1,7 @@
 package com.microservices.tests;
 
 import static org.junit.Assert.fail;
-
 import java.util.List;
-
 import javax.servlet.UnavailableException;
 
 import org.junit.Assert;
@@ -23,23 +21,23 @@ import javassist.NotFoundException;
 @SpringBootTest
 class UserUnitTests {
 	
-	@Autowired
+    @Autowired
     private UserService userService;
 	
-	String johnEmail = "John@black.com";
-	String marcoEmail = "Marco@f.com";
-	String usContry = "US";
+    String johnEmail = "John@black.com";
+    String marcoEmail = "Marco@f.com";
+    String usContry = "US";
 	
-	@Test
+    @Test
     public void testHibernateCreatesUsers_testDupliacateKeys_testHibernateFindsUsers_testHibernateUpdatesUser_testHibernateDeleteUser() throws NotFoundException {
-		// Create
-		List<User> users = userService.findAll();
-		Assert.assertEquals(0, users.size());
+	// Create
+	List<User> users = userService.findAll();
+	Assert.assertEquals(0, users.size());
 		
-		User marco = new User(marcoEmail, "Marco", "F", "myNickName", "123", "UK");
-		userService.add( marco );
+	User marco = new User(marcoEmail, "Marco", "F", "myNickName", "123", "UK");
+	userService.add( marco );
 		
-		users = userService.findAll();
+	users = userService.findAll();
         Assert.assertEquals(1, users.size());
         Assert.assertEquals(marcoEmail, users.get(0).getEmail());
         
@@ -52,19 +50,19 @@ class UserUnitTests {
         // Duplicate objects are not allowed
         try {
         	userService.add( john );
-			fail();
-		} catch (DuplicateKeyException e) {}
+		fail();
+	} catch (DuplicateKeyException e) {}
         
-		// Find
-		List<User> usUsers= userService.findByCountry(usContry);
-		Assert.assertEquals(1, usUsers.size());
-		Assert.assertEquals(usContry, usUsers.get(0).getCountry());
+	// Find
+	List<User> usUsers= userService.findByCountry(usContry);
+	Assert.assertEquals(1, usUsers.size());
+	Assert.assertEquals(usContry, usUsers.get(0).getCountry());
 		
-		User userJohn = userService.findByEmail(johnEmail);
-		Assert.assertEquals(johnEmail, userJohn.getEmail());
-		Assert.assertEquals("Black", userJohn.getLastName());
+	User userJohn = userService.findByEmail(johnEmail);
+	Assert.assertEquals(johnEmail, userJohn.getEmail());
+	Assert.assertEquals("Black", userJohn.getLastName());
         
-		// Update
+	// Update
         john.setLastName("White");
         userService.update(john);
         userJohn = userService.findByEmail(johnEmail);
@@ -77,13 +75,13 @@ class UserUnitTests {
         Assert.assertFalse(users.get(0).getEmail().equals(johnEmail));
     }
 	
-	@Test
+    @Test
     public void testHealthCheck() {
-		try {
-			userService.healthCheck();
-		} catch (UnavailableException e) {
-			fail();
-		}
+	try {
+		userService.healthCheck();
+	} catch (UnavailableException e) {
+		fail();
 	}
+    }
 
 }
