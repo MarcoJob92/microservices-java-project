@@ -43,3 +43,12 @@ The main technologies used for this project are:
   - JUnit
   - Maven
   
+## Functionality overview
+The Java application exposes REST Web Services to perform **CRUD** operations of User entities.  
+The Database used for this application is **H2**, which is an in-memory database.  
+**Spring Boot** and **Hibernate-JPA** are integrated togheter for a better application implementation, the database is automatacly initialised by Spring and the **ORM** pattern is used, mapping the database tables with the java classes.  
+The service is also able to send events after an operation was completed so that other services (not implemented in this application but that could be implemented in a real production enviroment) can be updated if they are interested in the User service.  
+The service can send events thanks to an Event Producer created with **RabbitMQ**.  
+The Application is also provided of Unit and Integration tests as well as a simple health check.  
+The *@SpringBootTest* annotaion and **JUnit 5** are used to write the tests.  
+**Maven** to download all the dependencies.  
